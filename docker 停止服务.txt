@@ -1,0 +1,33 @@
+CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS                   PORTS                  NAMES
+8e7d5916cf7a        mongo:3.2.11              "/entrypoint.sh mo..."   About an hour ago   Up 22 minutes            27017/tcp              wekan-db
+87fc9cba6fb1        mquandalle/wekan          "node /build/main.js"    About an hour ago   Up 22 minutes            0.0.0.0:8080->80/tcp   wekan_n_1
+be4abf72320b        mongo                     "/entrypoint.sh mo..."   About an hour ago   Up 22 minutes            27017/tcp              wekan_wekandb_1
+275f264af65a        mquandalle/wekan:latest   "node /build/main.js"    5 hours ago         Up 27 seconds            0.0.0.0:8081->80/tcp   wekan-app
+e05434440bb6        hello-world               "/hello"                 6 hours ago         Exited (0) 6 hours ago                          stupefied_euclid
+2e52ce888d69        hello-world               "/hello"                 6 hours ago         Exited (0) 6 hours ago                          youthful_yonath
+
+
+
+
+ wekan-db wekan_n_1  wekan_wekandb_1  wekan-app  stupefied_euclid  youthful_yonath 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

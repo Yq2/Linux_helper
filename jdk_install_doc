@@ -1,0 +1,19 @@
+安装jre
+>sudo apt-get install default-jre
+安装open-jdk
+>sudo apt-get install default-jdk
+配置环境变量
+编辑.hashrc文件
+>cd ~
+>ll  
+>vim .bashrc
+在文件最后面填上下面内容
+主要就是把jdk安装路径写入JAVA_HOME 注意使用Ubuntu安装的jdk不一定是java8,需要到安装目录查看
+JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+JRE_HOME=$JAVA_HOME/jre
+JAVA_BIN=$JAVA_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export JAVA_HOME JRE_HOME PATH CLASSPATH
+
+上面安装办法是使用Ubuntu源,也可以使用源码安装,下载jdk包解压安装

@@ -1,0 +1,11 @@
+安装之前需保证Java环境已经安装，并且配置好
+>apt-get install tomcat8
+您可能还需要安装tomcat8-docs，tomcat8-examples和tomcat8-admin工具，这些工具提供了文档，测试和允许您基于Web的应用程序管理Tomcat
+>apt-get install tomcat8-docs tomcat8-examples tomcat8-admin
+如果需要启动，停止或重新启动Tomcat
+>systemctl start tomcat8
+>systemctl stop tomcat8
+>systemctl restart tomcat8
+tomcat默认监听8080端口，开启tomcat前查看端口占用情况
+>netstat -ntpl
+

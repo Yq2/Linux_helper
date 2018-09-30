@@ -1,0 +1,12 @@
+关闭Ubuntu防火墙
+>ufw disable
+开启
+>ufw enable
+卸载
+>apt-get remove iptables
+关闭ubuntu中的防火墙的其余命令
+>iptables -P INPUT ACCEPT
+>iptables -P FORWARD ACCEPT
+>iptables -P OUTPUT ACCEPT
+>iptables -F
+

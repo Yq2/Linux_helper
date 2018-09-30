@@ -1,0 +1,9 @@
+dounload linux google hsot file (you can in windowns download ,copy to linux)
+cp hosts /etc/hosts
+
+
+
+run 
+rcnscd restart
+or
+systemctl restart NetworkManager

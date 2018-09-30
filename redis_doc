@@ -1,0 +1,220 @@
+redis install: 
+>apt-get update
+>apt-get install redis-server
+
+redis run:
+>redis-server
+
+check run is ok:
+>redis-cli
+
+redis config:
+CONFIG GET CONFIG_SETTING_NAME
+>CONFIG GET loglevel
+1) "loglevel"
+2) "notice"
+get redis all config information
+>CONFIG GET *
+
+alter redis config information
+>CONFIG SET loglevel "notice"
+
+>CONFIG GET loglevel
+
+redis.conf里面有很多配置信息：包含端口绑定，连接超时，连接线程数等
+
+redis 常用数据类型：string hash list set zset(sorted set:有序集合)
+string 是二进制安全的 也就是说string可以包含任何数据，比如图片，序列化后的对象
+一个string 可以存储512MB
+>SET name "runoob"
+
+>GET name 
+
+删除key
+>del name
+Hash存储：是一个string类型的field和value的映射表，hash适合存储对象 每个hash可以存储40多亿键值对
+>HMSET user:1 username runoob password runoob points 200
+>HGETALL user:1
+或者
+>HMSET user username runoob password runoob points 200
+>HGETALL user 也是可以的
+删除hash key
+>del user
+或者
+>del user:1
+
+其中user:1是键值
+List 列表
+>lpush runoob redis
+>lpush runoob mongodb
+>lpush runoob rabitmq
+>lrange runoob 0 10
+上面依次向runoob列表里面插入redis,mongodb,rabitmq 插入的每个值都会返回索引，索引就是id 最后使用lrange列出runoob列表里0-10的序列 这个数字也就是item在列表中的索引，这是个双闭区间 如果需要显示单个item :0 0第一个1 1第二个
+一个List最多可以存储40多亿item，List列表中的数据是有序的
+Set集合：无序不重复，集合是通过哈希表实现，查找复杂度为O(1)
+>sadd school sanya
+>sadd school hainan
+>sadd school shenzheng
+>sadd school beijing
+列出集合中的元素
+>smembers school
+每个集合一样可以存储40多亿item
+
+zset(sorted set：有序集合):有序但是不重复，每个元素都会关联一个double类型的分数，通过分数进行排序 zset成员唯一 这个"分数" 可以重复
+语法:zadd key score member
+127.0.0.1:6379> zadd company 0 vivo
+(integer) 1
+127.0.0.1:6379> zadd company 9 oppo
+(integer) 1
+127.0.0.1:6379> zadd company 9 oppo
+(integer) 0
+127.0.0.1:6379> zadd company 0 vivo
+(integer) 0
+127.0.0.1:6379> zadd company 0 xiaomi
+(integer) 1
+127.0.0.1:6379> zadd company 0 smart
+(integer) 1
+127.0.0.1:6379> zrangebyscore company 0 100
+1) "smart"
+2) "vivo"
+3) "xiaomi"
+4) "oppo"
+127.0.0.1:6379> zrangebyscore company 0 0
+1) "smart"
+2) "vivo"
+3) "xiaomi"
+127.0.0.1:6379> 
+发现什么问题:分数0存储了三个item 同一个分数下后插入的item会排在之前插入的上面
+
+在远程服务器上执行命令:
+redis-cli -h host -p port -a password
+$>redis-cli -h 127.0.0.1 -p 6379 -a "mypassword"
+上面展示了连接远程redis主机,端口为6379，密码为mypassword的redis服务上
+连接上后测试是否连通
+redis 127.0.0.1:6379>PING
+
+PONG 
+
+Redis HyperLogLog:用来做基数统计的算法，基数计算需要的空间是固定的且很小的，在redis里每个hyperloglog 键只需花费12kb内存,就能计算出2^64个不同元素的基数
+基数{1,3,5,7,5,8,7}
+
+127.0.0.1:6379> PFADD runoobkey "redis"
+(integer) 1
+127.0.0.1:6379> PFADD runoobkey "mongodb"
+(integer) 1
+127.0.0.1:6379> PFADD runoobkey "mysql"
+(integer) 1
+127.0.0.1:6379> pfadd runoobkey "php"
+(integer) 1
+127.0.0.1:6379> pfcount runoobkey
+(integer) 4
+127.0.0.1:6379> pfadd runoobkey 123
+(integer) 1
+127.0.0.1:6379> pfadd runoobkey 456
+(integer) 1
+127.0.0.1:6379> pfcount runoobkey
+(integer) 6
+
+Redis 命令不区分大小写
+
+Redis发布订阅：
+>SUBSCRIBE redisChat 开启一个订阅频道
+>publish redisChat 123  新开一个客户端(redis-cli)向订阅频道推送一条消息
+
+127.0.0.1:6379> publish redisChat 123
+(integer) 1
+127.0.0.1:6379> publish redisChat '*****hahah******'
+(integer) 1
+
+这时开启频道的端口就会收到消息:
+root@YQ-PC:/usr/lib# redis-cli
+127.0.0.1:6379> SUBSCRIBE redisChat
+Reading messages... (press Ctrl-C to quit)
+1) "subscribe"
+2) "redisChat"
+3) (integer) 1
+1) "message"
+2) "redisChat"
+3) "123"
+1) "message"
+2) "redisChat"
+3) "*****hahah******"
+
+Redis事务：
+事务是原子的，要么全部执行，要么全部不执行 事务执行过程中不会倍其他客户端发送的命令请求打断
+事务的流程：1开始事务2命令队列3执行事务
+>MULTI   开启一个事务
+..
+..
+..
+>EXEC  提交一个事务
+
+Redis服务信息：
+>INFO 
+将打印所有redis系统信息
+还有很多redis系统命令参考资料
+
+Redis 备份当前数据库：
+>save 
+该命令在redis安装目录中创建dump.rdb文件
+
+Redis 恢复数据:
+只需把备份文件dump.rdb移动到redis安装目录即可:CONFIG GET dir获取redis安装目录
+
+Redis 创建redis备份文件，命令在后台执行
+>BGSAVE
+
+Redis安全：
+>config get requirepass 获取redis服务密码 默认为空
+
+>config set requirepass '123456' 设置Redis服务密码为'123456'
+
+新开一个客户端连接：
+>redis-cli
+>set mykey 'auth test'
+..
+(error)NOAUTH Authentication required
+..
+说明没有输入密码
+提示：没输入密码之前，对Redis服务所做的操作都是无效的
+
+Redis客户端连接：Redis监听TCP端口或Unix socket方式接收连接 主要操作
+1 客户端socket会被设置为非阻塞模式，redis在网络事件处理上采用的是，非阻塞多路复用模型
+2然后为这个socket设置TCP_NODELAY属性，并警用Nagle算法
+3 创建一个可读的文件事件监听这个客户端socket的数据发送
+>config get maxclients  获取最大客户端连接数
+
+redis是非关系型的数据库，存储介质为内存，存储结构为键值对，数据结构：字符串，list字符串列表，hash ，集合 这些数据结构本质上还是字符串
+redis支持多数据库，支持事务，一个redis数据库实列最多可支持16个数据库，下标依次为0-15 默认连接第0个数据库
+>select 0
+>keys *  #列出所有key
+
+
+redis关于keys的操作
+1 > keys * #查看所有key
+2 > keys my?  #可以列出所有以my开头的key
+3 > del my1 my2 my3  #批量删除
+4 >exists my1 #检查key是否存在
+5 >rename company newcompany  #重命名
+6 > expire 1000 #设置过期时间 1千秒
+7 > ttl newcompany  #查看key剩余有效时间
+8 > type newcompany  #获取key的类型
+9 > move mysite 1 # 移动mysite到1号数据库,移动之后数据类型不变
+
+
+
+redis事务：
+事务的特性：所有任务串行执行，要么全部成功，要么全部失败 ，如果在事务执行期期间服务器或者客户端发生故障，该事务将不会被执行，如果事务提交之后服务器或者客户端发生异常，该事务的执行结果不会失效
+事务中的三种操作：开启事务，提交事务，事务回滚
+1 开启
+>multi    #输入了该命令，之后的数据库操作都会存储在队列中，依次执行
+2 提交
+>exec   #提交 
+3 discard  #事务回滚 回滚之后数据库会恢复到事务提交之前的状态
+
+redis 配置文件:redis.conf 
+使用apt-get方式安装:该文件在/etc/redis目录下
+
+
+ 
+

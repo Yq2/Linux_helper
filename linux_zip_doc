@@ -1,0 +1,56 @@
+这里演示Ubuntu下压缩文件的处理方式
+某些压缩/解压工具是第三方的，没有需要安装
+下面是示范演示
+---------------------
+>sudo apt-get install rar 安装
+>sudo apt-get remove rar 移除
+---------------------
+1 abc.tar.xz
+>xz -d abc.tar.xz #第一步解压
+>tar -xvf abc.tar #第二步解压
+----------------------
+2 abc.tar
+>tar -xvf abc.tar #解压
+>tar cvf abc.tar dirName #打包(不是压缩)
+---------------------
+3 abc.gz
+>gunzip abc.gz #解压1
+>gzip -d abc.gz #解压2
+>gzip abc #压缩
+---------------------
+4 abc.tar.gz和abc.tgz
+>tar zxvf abc.tar.gz #解压
+>tar zcvf abc.tar.gz dirName #压缩
+---------------------
+5 abc.bz2
+>bzip2 -d abc.bz2 #解压1
+>bunzip2 abc.bz2 #解压2
+>bzip2 -z fileName #压缩
+---------------------
+6 abc.tar.bz2
+>tar jxvf abc.tar.bz2 #解压
+>tar jcvf abc.tar.bz2 DirName #压缩
+-----------------------
+7 abc.bz
+>bzip2 -d abc.bz #解压1
+>bunzip2 abc.bz #解压2
+-----------------------
+8 abc.tar.bz
+>tar jxvf abc.tar.bz #解压
+------------------------
+9 abc.Z
+>uncompress abc.Z #解压
+>compress fileName #压缩
+-------------------------
+10 abc.tar.Z
+>tar Zxvf abc.tar.Z #解压
+>tar Zcvf abc.tar.Z dirName #压缩
+---------------------------
+11 abc.zip
+>unzip abc.zip #解压
+>zip abc.zip dirName #压缩
+---------------------------
+12 abc.rar
+>rar x abc.rar #解压
+>rar a abc.rar dirName #压缩
+---------------------------

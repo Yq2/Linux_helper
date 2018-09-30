@@ -1,0 +1,20 @@
+zsh是一个基于bash终端的she'll工具,爱界面上，使用上要超过bash shell
+安装
+>sudo apt-get install zsh git wget
+上面安装了git wget zsh 这些工具
+获取并自动安装oh-my-zsh
+>wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+>cd ~
+替换bash为zsh
+>chsh -s /bin/zsh
+退出终端
+>exit
+重新登录可以看到zsh的终端模式了
+
+下面设置zsh的风格,默认是robbyrussell 现在把风格改成ys
+vim ~/.zshc
+然后将ZSH_THEME=“robbyrussell”
+中的robbyrussell改成ys
+保存退出 重新进入zsh 就可以看到ys风格了
+
+

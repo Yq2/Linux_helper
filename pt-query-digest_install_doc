@@ -1,0 +1,3 @@
+>wget percona.com/get/pt-query-digest
+>chmod u+x pt-query-digest
+>mv pt-query-digest /usr/bin/

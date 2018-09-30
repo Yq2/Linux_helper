@@ -1,0 +1,54 @@
+nginx 服务器占用的是80端口,如果系统已经装了其他服务器比如：Apache2 需要先停止
+查看系统端口占用情况:
+>netstat -ntpl
+停止相应进程或者服务
+>service apache2 stop
+or
+>sudo kill -9 port  //port代表进程的端口号
+
+正式安装nginx
+安装gcc g++的依赖库
+>apt-get install build-essential
+>apt-get install libtool
+安装 pcre依赖库
+>sudo apt-get update 
+>sudo apt-get install libpcre3 libpcre3-dev 
+安装 zlib依赖库
+>apt-get install zlib1g-dev
+安装 ssl依赖库
+>apt-get install openssl
+安装nginx
+>wget http://nginx.org/download/nginx-1.11.3.tar.gz
+>tar -zxvf nginx-1.11.3.tar.gz
+>cd nginx-1.11.3
+配置
+>./configure --prefix=/usr/local/nginx 
+>make
+注意：这里可能会报错，提示“pcre.h No such file or directory”,具体详见：http://stackoverflow.com/questions/22555561/error-building-fatal-error-pcre-h-no-such-file-or-directory
+需要安装 libpcre3-dev,命令为：sudo apt-get install libpcre3-dev
+>sudo make install
+启动nginx
+>sudo /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf 
+查看nginx进程
+>ps -ef | grep nginx
+启动nginx
+>cd /usr/local/nginx/sbin/nginx
+>./nginx
+停止nginx
+>./nginx -s stop
+>./nginx -s quit
+-s都是采用向 Nginx 发送信号的方式
+Nginx重新加载配置
+>./nginx -s reload
+指定配置文件
+>./nginx -c /usr/local/nginx/conf/nginx.conf
+-c表示configuration，指定配置文件
+查看 Nginx 版本
+>./nginx -v
+检查配置文件是否正确
+>./nginx -t
+如果出错 可以尝试以root身份操作
+显示帮助信息
+>./nginx -h
+
+

@@ -1,0 +1,11 @@
+停止容器
+查看容器中有哪些镜像在运行
+>docker ps
+显示的列表每个item最前面的编码就是该镜像在docker容器中的id
+停止镜像
+>docker stop id
+...
+...
+
+
+>docker ps  //再次查看是否还有运行的镜像，docker里面没有镜像运行，docker也自动停止

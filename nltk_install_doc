@@ -1,0 +1,14 @@
+http://blog.csdn.net/cxq2046/article/details/50972715
+
+windows -->download baiduyunpan--->download nltk_data.tar.gz
+copy nltk_data.tar.gz to ubuntu /home/yq/download  (use mouse tag)
+
+>>cd /home/yq/download
+>>ls
+>>cp nltk_data.tar.gz /usr/local/lib
+>>tar -xvf nltk_data.tar.gz
+...
+...
+...
+>>rm -rf nltk_data.tar.gz
+ok
